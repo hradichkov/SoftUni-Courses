@@ -1,10 +1,10 @@
 package P06DefiningClassesExercises.P04RawData;
 
-public class P04Cargo {
+public class Cargo {
     private int weight;
     private String type;
 
-    public P04Cargo(int weight, String type) {
+    public Cargo(int weight, String type) {
         this.weight = weight;
         this.type = type;
     }

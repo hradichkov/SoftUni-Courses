@@ -1,10 +1,10 @@
 package P06DefiningClassesExercises.P04RawData;
 
-public class P04Tire {
+public class Tire {
     private double pressure;
     private int age;
 
-    public P04Tire(double pressure, int age) {
+    public Tire(double pressure, int age) {
         this.pressure = pressure;
         this.age = age;
     }

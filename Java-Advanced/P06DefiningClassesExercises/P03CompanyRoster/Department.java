@@ -3,18 +3,18 @@ package P06DefiningClassesExercises.P03CompanyRoster;
 import java.util.ArrayList;
 import java.util.List;
 
-public class P02Department {
+public class Department {
     String name;
-    List<P02Employee> employees;
+    List<Employee> employees;
 
-    public P02Department(String name) {
+    public Department(String name) {
         this.name = name;
         this.employees = new ArrayList<>();
     }
 
     public double averageSalary() {
 //        return employees.stream().mapToDouble(e -> e.getSalary()).average().orElse(0);
-        return employees.stream().mapToDouble(P02Employee::getSalary).average().orElse(0);
+        return employees.stream().mapToDouble(Employee::getSalary).average().orElse(0);
     }
 
     public String getName() {
@@ -25,11 +25,11 @@ public class P02Department {
         this.name = name;
     }
 
-    public List<P02Employee> getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(List<P02Employee> employees) {
+    public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 }

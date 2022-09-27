@@ -4,12 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class P03Main {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         int n = Integer.parseInt(scanner.nextLine());
-        Map<String, P03Car> cars = new LinkedHashMap<>();
+        Map<String, Car> cars = new LinkedHashMap<>();
 
         while (n-- > 0) {
             String[] data = scanner.nextLine().split(" ");
@@ -17,7 +17,7 @@ public class P03Main {
             double fuelAmount = Double.parseDouble(data[1]);
             double fuelCost = Double.parseDouble(data[2]);
 
-            P03Car car = new P03Car(model, fuelAmount, fuelCost);
+            Car car = new Car(model, fuelAmount, fuelCost);
             cars.put(model, car);
         }
 

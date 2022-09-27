@@ -1,10 +1,10 @@
 package P06DefiningClassesExercises.P04RawData;
 
-public class P04Engine {
+public class Engine {
     private  int speed;
     private int power;
 
-    public P04Engine(int speed, int power) {
+    public Engine(int speed, int power) {
         this.speed = speed;
         this.power = power;
     }

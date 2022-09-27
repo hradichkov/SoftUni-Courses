@@ -1,12 +1,12 @@
 package P06DefiningClassesExercises.P05SpeedRacing;
 
-public class P03Car {
+public class Car {
     private String model;
     private double fuelAmount;
     private double fuelCost;
     private int distance;
 
-    public P03Car(String model, double fuelAmount, double fuelCost) {
+    public Car(String model, double fuelAmount, double fuelCost) {
         this.model = model;
         this.fuelAmount = fuelAmount;
         this.fuelCost = fuelCost;

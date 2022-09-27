@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class P02Main {
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
         int n = Integer.parseInt(scanner.nextLine());
-        Map<String, P02Department> departmentMap = new HashMap<>();
+        Map<String, Department> departmentMap = new HashMap<>();
 
         while (n-- > 0) {
             String[] data = scanner.nextLine().split(" ");
@@ -19,35 +19,35 @@ public class P02Main {
             String position = data[2];
             String department = data[3];
 
-            P02Employee employee = null;
+            Employee employee = null;
 
             switch (data.length) {
                 case 4:
-                    employee = new P02Employee(name, salary, position, department);
+                    employee = new Employee(name, salary, position, department);
                     break;
                 case 5:
                     if (data[4].matches("\\d+")) {
                         int age = Integer.parseInt(data[4]);
 
-                        employee = new P02Employee(name, salary, position, department, age);
+                        employee = new Employee(name, salary, position, department, age);
                     } else {
                         String email = data[4];
 
-                        employee = new P02Employee(name, salary, position, department, email);
+                        employee = new Employee(name, salary, position, department, email);
                     }
                     break;
                 case 6:
                     String email = data[4];
                     int age = Integer.parseInt(data[5]);
 
-                    employee = new P02Employee(name, salary, position, department, email, age);
+                    employee = new Employee(name, salary, position, department, email, age);
                     break;
             }
-            departmentMap.putIfAbsent(department, new P02Department(department));
+            departmentMap.putIfAbsent(department, new Department(department));
             departmentMap.get(department).getEmployees().add(employee);
         }
 
-        P02Department highestPaidDepartment = departmentMap.entrySet().stream()
+        Department highestPaidDepartment = departmentMap.entrySet().stream()
                 .max(Comparator.comparingDouble(e -> e.getValue().averageSalary()))
                 .get()
                 .getValue();

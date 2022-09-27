@@ -1,6 +1,6 @@
 package P06DefiningClassesExercises.P03CompanyRoster;
 
-public class P02Employee {
+public class Employee {
     private String name;
     private double salary;
     private String position;
@@ -8,7 +8,7 @@ public class P02Employee {
     private String email;
     private int age;
 
-    public P02Employee(String name, double salary, String position, String department) {
+    public Employee(String name, double salary, String position, String department) {
         this.name = name;
         this.salary = salary;
         this.position = position;
@@ -17,17 +17,17 @@ public class P02Employee {
         this.age = -1;
     }
 
-    public P02Employee(String name, double salary, String position, String department, String email) {
+    public Employee(String name, double salary, String position, String department, String email) {
         this(name, salary, position, department);
         this.email = email;
     }
 
-    public P02Employee(String name, double salary, String position, String department, int age) {
+    public Employee(String name, double salary, String position, String department, int age) {
         this(name, salary, position, department);
         this.age = age;
     }
 
-    public P02Employee(String name, double salary, String position, String department, String email, int age) {
+    public Employee(String name, double salary, String position, String department, String email, int age) {
         this(name, salary, position, department, email);
         this.age = age;
     }
