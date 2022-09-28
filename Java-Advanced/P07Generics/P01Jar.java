@@ -1,4 +1,4 @@
-package P07Generics.P01JarOfT;
+package P07Generics;
 
 import java.util.ArrayDeque;
 
