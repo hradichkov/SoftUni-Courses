@@ -1,4 +1,4 @@
-package P04FirstAndReserveTeam;
+package P02Encapsulation.P04FirstAndReserveTeam;
 
 import java.io.BufferedReader;
 import java.io.IOException;

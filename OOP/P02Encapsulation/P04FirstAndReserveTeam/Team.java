@@ -1,4 +1,4 @@
-package P04FirstAndReserveTeam;
+package P02Encapsulation.P04FirstAndReserveTeam;
 
 import java.util.ArrayList;
 import java.util.Collections;
