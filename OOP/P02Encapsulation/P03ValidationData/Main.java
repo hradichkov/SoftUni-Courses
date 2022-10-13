@@ -1,4 +1,4 @@
-package P03ValidationData;
+package P02Encapsulation.P03ValidationData;
 
 import java.io.BufferedReader;
 import java.io.IOException;

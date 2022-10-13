@@ -1,4 +1,4 @@
-package P03ValidationData;
+package P02Encapsulation.P03ValidationData;
 
 public class Person {
     private String firstName;
