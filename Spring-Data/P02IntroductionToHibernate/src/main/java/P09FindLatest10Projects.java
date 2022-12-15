@@ -1,3 +1,4 @@
+import entities.Employee;
 import entities.Project;
 
 import javax.persistence.EntityManager;
@@ -6,9 +7,12 @@ import javax.persistence.Persistence;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class P09FindLatest10Projects {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("PU_Name");
         EntityManager entityManager = factory.createEntityManager();
 
