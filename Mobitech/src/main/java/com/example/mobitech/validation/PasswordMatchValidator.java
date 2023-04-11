@@ -19,6 +19,7 @@ public class PasswordMatchValidator implements ConstraintValidator<ValidatePassw
 
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext constraintValidatorContext) {
+
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(value);
 
         Object passwordValue = beanWrapper.getPropertyValue(this.password);
@@ -33,6 +34,7 @@ public class PasswordMatchValidator implements ConstraintValidator<ValidatePassw
                 .addPropertyNode(confirmPassword)
                 .addConstraintViolation()
                 .disableDefaultConstraintViolation();
+
 
         return false;
     }

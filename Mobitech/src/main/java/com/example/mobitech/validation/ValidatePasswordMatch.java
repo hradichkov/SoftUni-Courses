@@ -15,7 +15,6 @@ public @interface ValidatePasswordMatch {
     String password();
 
     String confirmPassword();
-
     String message() default "Passwords miss match";
 
     Class<?>[] groups() default {};
