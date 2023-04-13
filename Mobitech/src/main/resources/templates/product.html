@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <span th:replace="~{fragments/head}"></span>
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h1 class="section-title position-relative text-center mb-5">Нашите Продукти</h1>
+            </div>
+        </div>
+        <div class="offers row mx-auto d-flex flex-row justify-content-center">
+            <div
+                    th:each="product: ${allProducts}"
+                    th:object="${product}"
+                    class="offer card col-sm-6 col-md-3  col-lg-2 m-1 p-0">
+                <div class="card-body pb-1">
+                    <h5 class="font-weight-bold mb-4"
+                        th:text="*{name}"></h5>
+                </div>
+
+                <div class="card-img-top-wrapper">
+                    <img th:src="*{'/images/' + img}" alt="" class="img-fluid">
+                </div>
+
+                <ul class="offer-details list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="card-text">
+                            <th:block th:text="|Цена: *{price} лв.|"></th:block>
+                        </div>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <a th:href="@{/product/info/{id} (id = *{id})}" class="btn btn-sm btn-secondary mb-1">Детайли</a>
+                    <a th:href="@{/purchase/{id}(id = *{id})}" class="btn btn-sm btn-secondary">Добави в Кошницата</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div>
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
+</body>
+</html>
