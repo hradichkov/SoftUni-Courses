@@ -146,4 +146,11 @@ public class User extends BaseEntity {
         this.orders = orders;
         return this;
     }
+
+    public SelectedProduct findByImg(String img) {
+        return this.selectedProducts.stream()
+                .filter(p -> p.getImg().equals(img))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+    }
 }

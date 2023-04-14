@@ -3,7 +3,6 @@ package com.example.mobitech.web;
 import com.example.mobitech.model.dtos.LoginDTO;
 import com.example.mobitech.model.dtos.UserRegistrationDTO;
 import com.example.mobitech.service.AuthService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,7 @@ public class AuthController {
     }
 
     @PostMapping("/login-error")
-    public String onFiledLogin(
+    public String onFailedLogin(
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
             RedirectAttributes redirectAttributes) {
 
@@ -56,8 +55,7 @@ public class AuthController {
     @PostMapping("/register")
     public String register(@Valid UserRegistrationDTO registrationDTO,
                            BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes,
-                           HttpServletRequest req)  {
+                           RedirectAttributes redirectAttributes)  {
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("registrationDTO", registrationDTO);

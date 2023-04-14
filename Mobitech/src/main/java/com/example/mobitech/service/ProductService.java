@@ -5,7 +5,6 @@ import com.example.mobitech.model.dtos.ProductInfoDTO;
 import com.example.mobitech.model.entity.Product;
 import com.example.mobitech.repository.CategoryRepository;
 import com.example.mobitech.repository.ProductRepository;
-import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ import java.util.List;
 
 @Service
 public class ProductService {
-
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final ModelMapper modelMapper;
@@ -31,7 +29,7 @@ public class ProductService {
                 .toList();
     }
 
-    public void addProduct(@Valid ProductAddDTO productAddDTO) {
+    public void addProduct(ProductAddDTO productAddDTO) {
         Product product = modelMapper.map(productAddDTO, Product.class);
 
         product.setName(productAddDTO.getName());

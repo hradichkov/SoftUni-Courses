@@ -28,7 +28,7 @@ public class InitService {
     public InitService(RoleRepository roleRepository,
                        UserRepository userRepository,
                        CategoryRepository categoryRepository, PasswordEncoder passwordEncoder,
-                       @Value("topsecret") String defaultPassword) {
+                       @Value("${app.default.password}") String defaultPassword) {
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
@@ -89,7 +89,7 @@ public class InitService {
                 setEmail("ivan@example.com").
                 setFirstName("Ivann").
                 setLastName("Ivanov").
-                setPassword(passwordEncoder.encode("topsecret")).
+                setPassword(passwordEncoder.encode(defaultPassword)).
                 setRoles(roleRepository.findByUserRole(UserRoleEnum.USER));
 
         var normalUser2 = new User().
@@ -97,7 +97,7 @@ public class InitService {
                 setEmail("stoqn@example.com").
                 setFirstName("Stoqn").
                 setLastName("Stoqnov").
-                setPassword(passwordEncoder.encode("topsecret")).
+                setPassword(passwordEncoder.encode(defaultPassword)).
                 setRoles(roleRepository.findByUserRole(UserRoleEnum.USER));
 
         userRepository.save(normalUser1);

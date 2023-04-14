@@ -28,8 +28,4 @@ spring:
         show_sql: false
 app:
   default:
-    admin:
-      password: 12345
-
-
-
+      password: topsecret
