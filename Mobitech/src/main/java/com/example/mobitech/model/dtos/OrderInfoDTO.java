@@ -15,8 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderInfoDTO {
     private Long id;
-    private LocalDate dateOrdered;
+    private LocalDate dateOfOrder;
     private BigDecimal orderSum;
-    private User client;
+    private User user;
     private List<PurchasedProduct> orderedProducts;
 }

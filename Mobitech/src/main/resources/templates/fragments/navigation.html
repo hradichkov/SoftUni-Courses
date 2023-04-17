@@ -17,7 +17,7 @@
     <h5><a class="text-white px-3"
            sec:authorize="isAuthenticated()">
         Добре дошли,
-        <th:block sec:authentication="name">X</th:block>
+        <th:block sec:authentication="name"></th:block>
         !</a></h5>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -41,8 +41,21 @@
             </th:block>
 
             <li class="nav-item">
+                <a class="nav-link" th:href="@{/user/admin}" sec:authorize="hasRole('ROLE_ADMIN')">
+                    Админ панел</a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link" th:href="@{/products/add}" sec:authorize="hasRole('ROLE_ADMIN')">
                     Добави продукт</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/orders}" sec:authorize="hasRole('ROLE_USER')">
+                    Вашите поръчки</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/cart}" sec:authorize="hasRole('ROLE_USER')">
+                    Количка</a>
             </li>
 
             <li class="nav-item">
@@ -51,12 +64,9 @@
                     <button type="submit" name="submit" value="value" class="btn btn-link nav-link">Logout
                     </button>
                 </form>
-
             </li>
 
         </ul>
-
-
     </div>
 </nav>
 

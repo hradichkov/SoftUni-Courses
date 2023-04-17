@@ -25,6 +25,6 @@ public class Order extends BaseEntity {
     @ManyToOne
     private User client;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<PurchasedProduct> orderedProducts = new ArrayList<>();
 }

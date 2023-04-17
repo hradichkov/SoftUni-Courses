@@ -10,8 +10,6 @@ import java.util.NoSuchElementException;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-@Setter
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -147,10 +145,37 @@ public class User extends BaseEntity {
         return this;
     }
 
-    public SelectedProduct findByImg(String img) {
+    public SelectedProduct findSelectedProductByImg(String img) {
         return this.selectedProducts.stream()
                 .filter(p -> p.getImg().equals(img))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);
+    }
+
+    public Order findOrderById(Long orderId) {
+        return this.orders.stream()
+                .filter(order -> order.getId().equals(orderId))
+                .findFirst().orElseThrow(NoSuchElementException::new);
+
+    }
+
+    public void addProductToPurchasedProductList(PurchasedProduct purchasedProduct) {
+        if (this.purchasedProducts.contains(purchasedProduct)) {
+            PurchasedProduct products = findPurchasedProductByImg(purchasedProduct.getImg());
+            products.setQuantity(purchasedProduct.getQuantity() + purchasedProduct.getQuantity());
+        } else {
+            this.purchasedProducts.add(purchasedProduct);
+        }
+    }
+
+    private PurchasedProduct findPurchasedProductByImg(String img) {
+        return this.purchasedProducts.stream()
+                .filter(p -> p.getImg().equals(img))
+                .findFirst()
+                .orElseThrow(NoSuchElementException::new);
+    }
+
+    public void removeProductFromSelectedList(Long productId) {
+        this.selectedProducts.removeIf(product -> product.getId().equals(productId));
     }
 }

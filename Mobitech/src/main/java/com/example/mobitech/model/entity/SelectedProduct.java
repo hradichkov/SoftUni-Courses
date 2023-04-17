@@ -15,14 +15,14 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "selected_product")
-public class SelectedProduct extends BaseEntity{
+public class SelectedProduct extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable=false)
+    @Column(nullable = false)
     @Length(max = 5000)
     private String img;
 

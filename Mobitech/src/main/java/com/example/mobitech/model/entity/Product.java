@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "products")
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
@@ -24,7 +24,7 @@ public class Product extends BaseEntity{
     @Length(max = 5000)
     private String description;
 
-    @Column(nullable=false, unique = true)
+    @Column(nullable = false, unique = true)
     private String img;
 
     @ManyToOne
