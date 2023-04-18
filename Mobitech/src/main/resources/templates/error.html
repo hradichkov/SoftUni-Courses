@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<head>
+    <span th:replace="~{fragments/head}"></span>
+</head>
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navigation}"></nav>
+</div>
+
+<div id="root" class="justify-content-center p-lg-5">
+    <div class="text-center p-lg-3">
+        <p>&nbsp;</p>
+        <p></p>
+        <p class="text-danger h4 col-md text-center">Oops, something went wrong</p>
+        <p>&nbsp;</p>
+        <p></p>
+        <a th:href="@{/}" class="btn btn-info">Обратно към начало</a>
+    </div>
+</div>
+
+<div>
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
