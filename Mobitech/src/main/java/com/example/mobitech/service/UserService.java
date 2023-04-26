@@ -1,10 +1,12 @@
 package com.example.mobitech.service;
 
+import com.example.mobitech.model.dtos.MakeOrderDTO;
+import com.example.mobitech.model.dtos.OrderInfoDTO;
+import com.example.mobitech.model.dtos.ProductInfoInCartDTO;
 import com.example.mobitech.model.dtos.UserInfoDTO;
-import com.example.mobitech.model.entity.Product;
-import com.example.mobitech.model.entity.SelectedProduct;
-import com.example.mobitech.model.entity.User;
+import com.example.mobitech.model.entity.*;
 import com.example.mobitech.model.enums.UserRoleEnum;
+import com.example.mobitech.repository.OrderRepository;
 import com.example.mobitech.repository.RoleRepository;
 import com.example.mobitech.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -12,19 +14,24 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final OrderRepository orderRepository;
     private final SelectedProductService selectedProductService;
     private final ProductService productService;
     private final ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, SelectedProductService selectedProductService, ProductService productService, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, OrderRepository orderRepository, SelectedProductService selectedProductService, ProductService productService, ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.orderRepository = orderRepository;
         this.selectedProductService = selectedProductService;
         this.productService = productService;
         this.modelMapper = modelMapper;
@@ -36,7 +43,7 @@ public class UserService {
         SelectedProduct selectedProduct = mapProductToSelectedProduct(product);
 
         if (user.getSelectedProducts().stream().anyMatch(p -> p.getImg().equals(product.getImg()))) {
-            selectedProduct = user.findByImg(product.getImg());
+            selectedProduct = user.findSelectedProductByImg(product.getImg());
             selectedProduct.setQuantity(selectedProduct.getQuantity() + 1);
         } else {
             user.getSelectedProducts().add(selectedProduct);
@@ -79,5 +86,81 @@ public class UserService {
                 .stream()
                 .map(user -> modelMapper.map(user, UserInfoDTO.class))
                 .toList();
+    }
+
+    public Set<ProductInfoInCartDTO> getSelectedProductsByUser(Principal principal) {
+        User user = getUserByPrincipal(principal);
+
+        return user.getSelectedProducts().stream()
+                .map(product -> modelMapper.map(product, ProductInfoInCartDTO.class))
+                .collect(Collectors.toSet());
+    }
+
+    public Integer countOfProductsInCart(Principal principal) {
+        return getSelectedProductsByUser(principal).stream()
+                .mapToInt(ProductInfoInCartDTO::getQuantity).sum();
+    }
+
+    public BigDecimal sumForAllPurchaseProduct(Principal principal) {
+        return getSelectedProductsByUser(principal).stream()
+                .map(ProductInfoInCartDTO::getProductSum)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    public OrderInfoDTO getOrderDetailsById(Principal principal, Long orderId) {
+        User user = getUserByPrincipal(principal);
+        OrderInfoDTO order = this.modelMapper.map(user.findOrderById(orderId), OrderInfoDTO.class);
+        order.setUser(user);
+        return order;
+    }
+
+    public Long orderProducts(MakeOrderDTO makeOrderDTO, Principal principal) {
+        User user = getUserByPrincipal(principal);
+        Order order = new Order();
+
+        List<PurchasedProduct> productsToAdd = user.getSelectedProducts().stream()
+                .map(this::mapSelectedProductToPurchasedProduct).toList();
+
+        order.getOrderedProducts().addAll(productsToAdd);
+        order.setDateOfOrder(LocalDate.now());
+        order.setClient(user);
+        order.setOrderSum(sumForAllPurchaseProduct(principal));
+        this.orderRepository.save(order);
+
+        user.setAddress(makeOrderDTO.getAddress());
+
+        for (PurchasedProduct product : productsToAdd) {
+            user.addProductToPurchasedProductList(product);
+        }
+
+        user.getSelectedProducts().clear();
+        user.getOrders().add(order);
+
+        this.userRepository.save(user);
+        this.selectedProductService.deleteAll();
+        return order.getId();
+    }
+
+    private PurchasedProduct mapSelectedProductToPurchasedProduct(SelectedProduct selectedProduct) {
+        PurchasedProduct purchasedProduct = new PurchasedProduct();
+        purchasedProduct.setName(selectedProduct.getName());
+        purchasedProduct.setImg(selectedProduct.getImg());
+        purchasedProduct.setQuantity(selectedProduct.getQuantity());
+        purchasedProduct.setPrice(selectedProduct.getPrice());
+
+        return purchasedProduct;
+    }
+
+    public void removeProductFromSelectedList(Long productId, Principal principal) {
+        User user = getUserByPrincipal(principal);
+        user.removeProductFromSelectedList(productId);
+        this.selectedProductService.deleteById(productId);
+        this.userRepository.save(user);
+    }
+
+    public List<OrderInfoDTO> getAllOrders(Principal principal) {
+        User user = getUserByPrincipal(principal);
+
+        return user.getOrders().stream().map(o -> modelMapper.map(o, OrderInfoDTO.class)).toList();
     }
 }

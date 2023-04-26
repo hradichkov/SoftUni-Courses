@@ -24,23 +24,24 @@ public class SecurityConfiguration {
                 requestMatchers("/", "/login", "/register", "/product",
                         "/login-error", "/product/info/{id}").permitAll().
 
-                requestMatchers("/products/add")
+                requestMatchers("/products/add", "/user/admin", "/product/delete/{id}", "/user/change-role/{id}")
                 .hasRole(UserRoleEnum.ADMIN.name()).
 
-                requestMatchers( "/orders").hasRole(UserRoleEnum.USER.name()).
-                        anyRequest().authenticated().
+                requestMatchers("/purchase/{id}", "/cart", "/orders",
+                        "/cart/remove-product-from-list/{id}", "/order/details/{id}").hasRole(UserRoleEnum.USER.name()).
+                anyRequest().authenticated().
                 and().
-                        formLogin().
-                        loginPage("/login").
-                        usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
-                        passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
-                        defaultSuccessUrl("/", true).
-                        failureForwardUrl("/login-error").
+                formLogin().
+                loginPage("/login").
+                usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
+                passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
+                defaultSuccessUrl("/", true).
+                failureForwardUrl("/login-error").//в контролера в логин връща грешките
                 and().
-                        logout().
+                logout().
                 logoutUrl("/logout").
-                        logoutSuccessUrl("/").
-                        invalidateHttpSession(true).
+                logoutSuccessUrl("/").
+                invalidateHttpSession(true).
                 deleteCookies("JSESSIONID");
 
         return http.build();

@@ -3,7 +3,6 @@ package com.example.mobitech.web;
 import com.example.mobitech.service.OrderService;
 import com.example.mobitech.service.ProductService;
 import com.example.mobitech.service.UserService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +30,6 @@ public class UserController {
         return "redirect:/product";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/user/admin")
     public String adminPanel(Model model) {
         model.addAttribute("allUsers", this.userService.getAllUsers());
@@ -40,7 +38,6 @@ public class UserController {
         return "admin";
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/user/change-role/{id}")
     public String changeRole(@PathVariable("id") Long userId) {
         this.userService.changeUserRole(userId);
