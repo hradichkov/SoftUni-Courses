@@ -55,7 +55,7 @@ public class UserService {
         this.userRepository.save(user);
     }
 
-    private SelectedProduct mapProductToSelectedProduct(Product product) {
+    public SelectedProduct mapProductToSelectedProduct(Product product) {
         SelectedProduct selectedProduct = new SelectedProduct();
         selectedProduct.setName(product.getName());
         selectedProduct.setPrice(product.getPrice());
@@ -63,7 +63,7 @@ public class UserService {
         return selectedProduct;
     }
 
-    private User getUserByPrincipal(Principal principal) {
+    public User getUserByPrincipal(Principal principal) {
         return this.userRepository.findByUsername(principal.getName())
                 .orElseThrow(() -> new Error("User not found!"));
     }
@@ -141,7 +141,7 @@ public class UserService {
         return order.getId();
     }
 
-    private PurchasedProduct mapSelectedProductToPurchasedProduct(SelectedProduct selectedProduct) {
+    public PurchasedProduct mapSelectedProductToPurchasedProduct(SelectedProduct selectedProduct) {
         PurchasedProduct purchasedProduct = new PurchasedProduct();
         purchasedProduct.setName(selectedProduct.getName());
         purchasedProduct.setImg(selectedProduct.getImg());

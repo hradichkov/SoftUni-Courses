@@ -2,9 +2,7 @@ package com.example.mobitech.model.dtos;
 
 import com.example.mobitech.model.entity.PurchasedProduct;
 import com.example.mobitech.model.entity.User;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +10,8 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class OrderInfoDTO {
     private Long id;
